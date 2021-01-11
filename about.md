@@ -1,7 +1,7 @@
 ---
-layout: default
+layout: page
 title: About
+permalink: /about/
 ---
-# About page
 
-This page tells you a little bit about me.
+# I am a full stack developer now working from Malaga, Spain

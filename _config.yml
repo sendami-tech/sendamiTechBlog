@@ -22,5 +22,25 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
-     
-theme: jekyll-theme-minimal
+
+theme: jekyll-lin  
+
+title: Sendami Tech Blog
+author: sendami-tech
+email: sendami-tech@gmail.com
+copyright: © 2021 GitHub User
+description: > # this means to ignore newlines until "show_excerpts:"
+ Difficult to find it googling, this is your site...
+show_excerpts: true # set to true to show excerpts on the homepage
+ 
+lin:
+ date_format: "%b %-d, %Y"
+ 
+ # path to the author avatar image
+ avatar_path: assets/images/face.png
+ 
+ # generate social links
+ social_links: 
+  twitter: sendamiTech
+  github: sendami-tech
+  linkedin : sendami-tech
