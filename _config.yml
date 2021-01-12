@@ -23,7 +23,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
-theme: jekyll-lin  
+remote-theme: jekyll-lin  
 
 title: Sendami Tech Blog
 author: sendami-tech
