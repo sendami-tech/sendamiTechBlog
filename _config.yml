@@ -43,4 +43,7 @@ lin:
   github: sendami-tech
   linkedin : sendami-tech
 
+disqus:
+  shortname: Any comment?  
+
 theme: jekyll-theme-minimal
