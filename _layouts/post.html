@@ -33,9 +33,15 @@ layout: default
     </div>
   </div>
 
-  {%- if site.disqus.shortname -%}
-  {%- include disqus_comments.html -%}
-  {%- endif -%}
-
+  <div class="col-md-12">
+    <script src="https://utteranc.es/client.js"
+        repo="sendami-tech/sendamiTechBlog"
+        issue-term="pathname"
+        label="Comment please!"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+    </script>
+  </div>
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
