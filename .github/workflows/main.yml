@@ -1,8 +1,5 @@
 name: Send a Tweet
-on: 
-  push:
-    branches:
-      
+on: [push] 
 jobs:
   tweet:
     runs-on: ubuntu-latest
