@@ -76,4 +76,48 @@ Let's see what I figured out
 
     ```
 
+ # If you need to mock a function that you imported from another module you have in your code 
+
+    Example of the module that you have been implemented, place in path './src/lib/util.ts'
+
+    ```typescript
+    
+    export default async function getHello() {
+        return Promise.resolve("Hello!")
+    }
+    
+    ```
+
+    Inside your test you will mock it like this:
+
+    * In the imports zone you need add
+
+    ```typescript
+
+    jest.mock('./src/lib/util.ts');
+    import getHello from './src/lib/util.ts'
+
+    ```
+
+    * Inside describe block
+
+    ```typescript
+
+    const mockGetHello = getHello as jest.MockedFunction<typeof getHello>;
+
+    ```
+
+    * Finally, inside the test
+
+    ```typescript
+
+    // Observe how we need to return as a Promise of string. We need to make sure it always returns
+    // the same type than in the real function
+    mockGetHello.mockImplementation(() => Promise.resolve('Hi!'))
+
+    ```
+
+
+
+
                
