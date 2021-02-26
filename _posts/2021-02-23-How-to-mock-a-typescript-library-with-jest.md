@@ -93,7 +93,7 @@ Let's see what I figured out
     * In the imports zone you need add
 
     ```typescript
-
+    import {jest} from '@jest/globals';
     jest.mock('./src/lib/util.ts');
     import getHello from './src/lib/util.ts'
 
@@ -117,6 +117,40 @@ Let's see what I figured out
 
     ```
 
+# If you need to mock the same function, mocking to different results in the same test
+
+    * First, lets mock the module imported in the imports area
+
+    ```typescript
+    impot {jest} from '@jest/globals'
+    jest.mock('fs');
+    import * as fs from 'fs';
+    ```
+
+    * Don't forget to clear all mocks before each test
+
+    ```typescript
+    beforeEach(() => {
+        jest.clearAllMocks();
+    })
+    ```
+
+    * We will use mockReturnValueOnce inside the test. The first time readFileSync is called, it will returned 'First reading', 
+    and the second time it will returned 'Second reading'
+
+    ```typescript
+    jest.spyOn(fs, 'readFileSync')
+        .mockReturnValueOnce('First reading')
+        .mockReturnValueOnce('Second reading')
+    ```
+
+    * If you need to mock the same thing, but instead of mock a value, you need to mock a function, like throwing an error, you can use:
+
+    ```typescript
+    jest.spyOnd(fs, 'readFileSync') 
+        mockImplementationOnce(() => 'First reading')
+        mockImplmentationOnce(() => throw new Error('Error reading'))   
+    ```
 
 
 
