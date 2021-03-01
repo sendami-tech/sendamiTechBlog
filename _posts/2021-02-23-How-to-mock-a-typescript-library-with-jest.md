@@ -152,6 +152,62 @@ Let's see what I figured out
         mockImplmentationOnce(() => throw new Error('Error reading'))   
     ```
 
+# If you want to mock the implementation of a class method, that it's instantiated inside the method that we are testing
+
+    * First, as always, let's mock the class
+    
+    ```typescript
+
+    import {mocked} from 'ts-jest';
+    import OurClass from './OurClass'
+    jest.mock('./OurClass');
+    
+    ```
+
+    * Inside describe, we will called mocked from ts-jest to mock the class instance
+    
+    ```typescript
+
+    const mockOurClass = mocked(OurClass);
+
+    beforeEach(() => {
+        mockOurClass.mockClear();    
+    })
+
+    ```
+
+    * You can check inside the test, how the instantiation of the class is called
+
+    ```typescript
+
+    expect(OurClass).not.toHaveBeenCalled();
+
+    ```
+
+    * To mock the implementation of the class method
+
+    ```typescript
+
+    (mockOurClass as jest.MockInstance<any, any>).mockImplementation(() => {
+        return {
+            execute: () => Promise.resolve('Result you want to return has to be the same type thatn the one returned by execute method')
+        }
+    })
+
+    ```
+# If you want to check than an error has been thrown inside an async method
+
+    ```typescript
+
+    try {
+        await methodThatThrowsError();
+    }
+    catch(e) {
+        expect(e.message).toContain('Error message thrown');
+    }
+
+    ```
+
 
 
                
