@@ -207,6 +207,19 @@ Let's see what I figured out
     }
 
     ```
+# If you want to check the content of a call to a function
+
+    ```typescript
+
+        // First, we spy the method whick call content we will check
+        const consoleLogSpy = jest.spyOn('console', log);
+
+        // Inside the test
+
+        expect(consoleLogSpy).toHaveBeenCalledWith(expect.objectContaining(expectedContentValue));
+
+
+    ```
 
 
 
