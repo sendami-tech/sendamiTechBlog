@@ -5,7 +5,7 @@ I never thought that add unit tests were going to be that difficult. After one w
 
 Let's see what I figured out
 
-# Basic tips to work with matchers
+# Basic tips working with matchers
 
 * To test if a constructor or a function call throws an error, add a function instantiating the class. In this way the error will be thrown just before the assertion. 
 
@@ -21,7 +21,7 @@ Let's see what I figured out
 
 # Get coverage report displayed in your terminal
 
-* To get coverage you need to add the following properties to the file jest.config.js:
+* To get the coverage, you need to add the following properties to the file jest.config.js:
 
     ```json
     "collectCoverage": true,
@@ -167,7 +167,6 @@ Let's see what I figured out
     * Inside describe, we will called mocked from ts-jest to mock the class instance
     
     ```typescript
-
     const mockOurClass = mocked(OurClass);
 
     beforeEach(() => {
