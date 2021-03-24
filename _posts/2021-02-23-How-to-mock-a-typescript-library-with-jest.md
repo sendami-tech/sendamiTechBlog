@@ -32,9 +32,9 @@ Let's see what I figured out
 
  # If you are using mocks in your tests, and one of the test only works when it's executed alone
 
-    This can happen because you need to clear your mocks between tests. 
+This can happen because you need to clear your mocks between tests. 
 
-    ```typescript
+```typescript
     describe("Testing....", () => {
             const consoleLogSpy = jest.spyOn(console, 'log');
 
@@ -42,150 +42,148 @@ Let's see what I figured out
                 jest.clearAllMocks();
             })
     })
-    ```
+```
 
 # If you need to mock a fs function, and force the result that is returning
 
-    Before anything else, we need to clear all mocks before each tests
+Before anything else, we need to clear all mocks before each tests
 
-    ```typescript
-
+```typescript
     beforeEach(() => {
         jest.clearAllMocks();
     })
-    
-    ```
+```
 
-    We need to mock fs library and then use jest.spyOn to be able to force the function to return what we need for the test.
-    So, at the top of the test, in the imports area:
+We need to mock fs library and then use jest.spyOn to be able to force the function to return what we need for the test.
+So, at the top of the test, in the imports area:
 
-    ```typescript
+```typescript
 
     jest.mock('fs');
     import * as fs from 'fs';
 
-    ```
+```
 
-    And inside the test is where we force the function to return the required value
+And inside the test is where we force the function to return the required value
 
-    ```typescript
+```typescript
 
     test("Should ...", () => {
         jest.spyOn(fs, 'existsSync').mockReturnValue(false);
     })
 
-    ```
+```
 
- # If you need to mock a function that you imported from another module you have in your code 
+# If you need to mock a function that you imported from another module you have in your code 
 
-    Example of the module that you have been implemented, place in path './src/lib/util.ts'
+## Example of the module that you have been implemented, place in path './src/lib/util.ts'
 
-    ```typescript
+```typescript
     
     export default async function getHello() {
         return Promise.resolve("Hello!")
     }
     
-    ```
+```
 
-    Inside your test you will mock it like this:
+## Inside your test you will mock it like this: 
 
-    * In the imports zone you need add
+* In the imports zone you need add
 
-    ```typescript
+```typescript
     import {jest} from '@jest/globals';
     jest.mock('./src/lib/util.ts');
     import getHello from './src/lib/util.ts'
 
-    ```
+```
 
-    * Inside describe block
+* Inside describe block
 
-    ```typescript
+```typescript
 
     const mockGetHello = getHello as jest.MockedFunction<typeof getHello>;
 
-    ```
+```
 
-    * Finally, inside the test
+* Finally, inside the test
 
-    ```typescript
+```typescript
 
     // Observe how we need to return as a Promise of string. We need to make sure it always returns
     // the same type than in the real function
     mockGetHello.mockImplementation(() => Promise.resolve('Hi!'))
 
-    ```
+```
 
 # If you need to mock the same function, mocking to different results in the same test
 
-    * First, lets mock the module imported in the imports area
+* First, lets mock the module imported in the imports area
 
-    ```typescript
+```typescript
     impot {jest} from '@jest/globals'
     jest.mock('fs');
     import * as fs from 'fs';
-    ```
+```
 
-    * Don't forget to clear all mocks before each test
+* Don't forget to clear all mocks before each test
 
-    ```typescript
+```typescript
     beforeEach(() => {
         jest.clearAllMocks();
     })
-    ```
+```
 
-    * We will use mockReturnValueOnce inside the test. The first time readFileSync is called, it will returned 'First reading', 
+* We will use mockReturnValueOnce inside the test. The first time readFileSync is called, it will returned 'First reading', 
     and the second time it will returned 'Second reading'
 
-    ```typescript
+```typescript
     jest.spyOn(fs, 'readFileSync')
         .mockReturnValueOnce('First reading')
         .mockReturnValueOnce('Second reading')
-    ```
+```
 
-    * If you need to mock the same thing, but instead of mock a value, you need to mock a function, like throwing an error, you can use:
+* If you need to mock the same thing, but instead of mock a value, you need to mock a function, like throwing an error, you can use:
 
-    ```typescript
+```typescript
     jest.spyOnd(fs, 'readFileSync') 
         mockImplementationOnce(() => 'First reading')
         mockImplmentationOnce(() => throw new Error('Error reading'))   
-    ```
+```
 
 # If you want to mock the implementation of a class method, that it's instantiated inside the method that we are testing
 
-    * First, as always, let's mock the class
+* First, as always, let's mock the class
     
-    ```typescript
+```typescript
 
     import {mocked} from 'ts-jest';
     import OurClass from './OurClass'
     jest.mock('./OurClass');
     
-    ```
+```
 
-    * Inside describe, we will called mocked from ts-jest to mock the class instance
+* Inside describe, we will called mocked from ts-jest to mock the class instance
     
-    ```typescript
+```typescript
     const mockOurClass = mocked(OurClass);
 
     beforeEach(() => {
         mockOurClass.mockClear();    
     })
 
-    ```
+```
 
-    * You can check inside the test, how the instantiation of the class is called
+* You can check inside the test, how the instantiation of the class is called
 
-    ```typescript
+```typescript
 
     expect(OurClass).not.toHaveBeenCalled();
 
-    ```
+```
 
-    * To mock the implementation of the class method
+* To mock the implementation of the class method
 
-    ```typescript
+```typescript
 
     (mockOurClass as jest.MockInstance<any, any>).mockImplementation(() => {
         return {
@@ -193,10 +191,10 @@ Let's see what I figured out
         }
     })
 
-    ```
+```
 # If you want to check than an error has been thrown inside an async method
 
-    ```typescript
+```typescript
 
     try {
         await methodThatThrowsError();
@@ -205,10 +203,11 @@ Let's see what I figured out
         expect(e.message).toContain('Error message thrown');
     }
 
-    ```
+```
+
 # If you want to check the content of a call to a function
 
-    ```typescript
+```typescript
 
         // First, we spy the method whick call content we will check
         const consoleLogSpy = jest.spyOn('console', log);
@@ -217,9 +216,4 @@ Let's see what I figured out
 
         expect(consoleLogSpy).toHaveBeenCalledWith(expect.objectContaining(expectedContentValue));
 
-
-    ```
-
-
-
-               
+ ```        
